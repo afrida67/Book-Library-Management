@@ -1,1 +1,25 @@
-<h1>heklo from <%= title %></h1>
+<% include partials/header %>
+    <h2>Add books</h2>
+
+    <form method="POST" action="/books">
+        <div class="form-group">
+          <label for="name">Title</label>
+          <input type="text" name="title" required >
+          <br>
+          <label for="name">Author</label>
+          <input type="text" name="author" required >
+          <br>
+          <label for="name">Description</label>
+          <input type="text" name="description" required >
+        </div>
+        <input type="submit" value="Add book" >
+    </form>
+
+    <h2>List of the books</h2>
+    <ul>
+        <% data.forEach(function(row){ %>
+           <li><%= row.title %> <%= row.author %> <%= row.description %></li>
+       <% }) %>
+       </ul>
+
+<% include partials/footer %>

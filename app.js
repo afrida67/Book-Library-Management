@@ -1,7 +1,7 @@
 const express = require('express');
 const path = require('path');
 const app = express();
-const exphbs = require('express-handlebars');
+
 
 const port = process.env.PORT || 3000;
 
@@ -24,10 +24,13 @@ app.use(express.urlencoded({ extended: false }));
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.get('/', function (req, res){
-    res.render('index', {
-        title: 'Eioquent JS'
-    });
+
+    res.render('index');
+
 });
 
+
+// api Routes
+app.use('/books', require('./routes/books'));
 
 app.listen(port, () => console.log(`Server started on port ${port}`));
