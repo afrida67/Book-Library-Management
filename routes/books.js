@@ -3,6 +3,14 @@ const express = require('express');
 const router = express.Router();
 const multer = require('multer');
 const path = require('path');
+const createError = require('http-errors');
+
+
+//error Middleware
+router.use(function (err, req, res, next){
+  res.send(404, err.message);
+  next();
+});
 
 const storage = multer.diskStorage({
     destination: './public/uploads/',
@@ -21,11 +29,9 @@ const upload = multer({
 
 // Check File Type
 function checkFileType(file, cb){
-  // Allowed ext
+
   const filetypes = /jpeg|jpg|png|gif/;
-  // Check ext
   const extname = filetypes.test(path.extname(file.originalname).toLowerCase());
-  // Check mime
   const mimetype = filetypes.test(file.mimetype);
 
   if(mimetype && extname){
@@ -36,16 +42,21 @@ function checkFileType(file, cb){
 }
 
 // showing all the books
-router.get('/', function (req, res){
+router.get('/', function (req, res, next){
 
     pool.query(`SELECT * FROM book`, (err, result) => {
+      if (err){
+        let err = new Error('Not Connected');
+        next(err);
+    } else {
      res.render('index', {data:result});
+      }
     });
  
 });
 
 // add a new book
-router.post('/', upload, function (req, res) {
+router.post('/', upload, function (req, res, next) {
 
     const values = {
         title: req.body.title,
@@ -56,8 +67,13 @@ router.post('/', upload, function (req, res) {
 
       pool.query(`INSERT INTO book SET ?`, [values], (err, result) => {
   
+        if (err){
+          let err = new Error('Not Connected');
+          next(err);
+      } else {
           res.status(201).json({ msg: `Book added with ID ${result.insertId}`});
           console.log(result);
+        }
   
       });
 
@@ -68,15 +84,17 @@ router.get('/find', function (req, res, next){
 
     const id = req.query.id;
 
-        pool.query(`Select * from book WHERE id= ${id}`, id, (err, result) => {
-
+        pool.query(`Select * from book WHERE id= ?`, id, (err, result) => {
+          if (err){
+            let err = new Error('Not Connected');
+            next(err);
+        } else {
             if (!result.length) {
                 console.log('ID not found');
-                res.status(201).json({ msg: `Id does not exist!`});
-                return next();
+                return next(createError(404, 'Id does not exist!'));
             }
             res.send(result);
-            console.log(result);
+          }
         });
  
 });
@@ -86,14 +104,17 @@ router.get('/delete', function (req, res, next){
 
     const id = req.query.id;
 
-    pool.query(`Delete from book WHERE id= ${id}`, (err, result) => {
-
+    pool.query(`Delete from book WHERE id= ?`,id, (err, result) => {
+      if (err){
+        let err = new Error('Not Connected');
+        next(err);
+    } else {
         if (result.affectedRows == 0) {
             console.log('ID not found');
-            res.status(201).json({ msg: `Id does not exist!`});
-            return next();
+            return next(createError(404, 'Id does not exist!'));
         }
         res.status(201).json({ msg: `ID Deleted`});
+       }
     });
 });
 
@@ -104,7 +125,12 @@ router.get('/details/:title', function (req, res, next){
     const title = req.params.title;
 
     pool.query(`Select * from book where title= '${title}'`, (err, result) => {
+      if (err){
+        let err = new Error('Not Connected');
+        next(err);
+    } else {
         res.render('details', {data:result[0]});
+      }
     });
 });
 

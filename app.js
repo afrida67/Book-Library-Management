@@ -22,13 +22,12 @@ app.use(express.urlencoded({ extended: false }));
 // static folder
 app.use(express.static(path.join(__dirname, 'public')));
 
-app.get('/', function (req, res){
-
-    res.render('index');
-
-});
-
 // api Routes
 app.use('/books', require('./routes/books'));
+
+//error middleware
+app.use(function(req, res){
+    res.send(404, 'Not found Error');
+  });
 
 app.listen(port, () => console.log(`Server started on port ${port}`));
