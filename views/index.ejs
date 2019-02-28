@@ -15,11 +15,26 @@
         <input type="submit" value="Add book" >
     </form>
 
+    <h2>Find a book</h2>  
+       <form action="/books/find">
+        <div class="form-group">
+            Give the id <input type="number" name="id" required >
+        </div>
+        <input type="submit" value="Search" >
+    </form>
+
     <h2>List of the books</h2>
     <ul>
         <% data.forEach(function(row){ %>
-           <li><%= row.title %> <%= row.author %> <%= row.description %></li>
+            <a href="/books/details"><li><%= row.title %> </a></li>
        <% }) %>
-       </ul>
-
+       </ul> 
+     
+    <h2>Delete books</h2>  
+       <form action="/books/delete">
+        <div class="form-group">
+                <input type="number" name="id" required >
+        </div>
+        <input type="submit" value="Delete" >
+    </form>
 <% include partials/footer %>

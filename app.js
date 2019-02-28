@@ -10,7 +10,7 @@ const logger = function (req, res, next){
     next();
 }
 
-app.use(logger);
+//app.use(logger);
 
 // Handlebars Middleware
 app.set('view engine', 'ejs');
