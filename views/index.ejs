@@ -1,5 +1,6 @@
 <% include partials/header %>
-    <h2>Add books</h2>
+<ul>
+    <h2> <i class="fas fa-plus-circle"> Add books</i></h2>
 
     <form method="POST" action="/books" enctype="multipart/form-data">
         <div class="form-group">
@@ -10,34 +11,36 @@
           <input type="text" name="author" required >
           <br>
           <label for="name">Description</label>
-          <input type="text" name="description" required >
+          <textarea input type="text" name="description" cols="30" rows="5"></textarea>
           <br>
           <label for="name">Book Image</label>
           <input name="image" type="file" required >
+          <br>
+          <input class="button" type="submit" value="Add book" >
         </div>
-        <input type="submit" value="Add book" >
+
     </form>
 
-    <h2>Find a book</h2>  
        <form action="/books/find">
         <div class="form-group">
-            Give the id <input type="number" name="id" required >
-        </div>
-        <input type="submit" value="Search" >
+        <input type="number" name="id" placeholder="Enter book id" required>
+        <input class="button" type="submit" value="Find the book" >
+    </div>
     </form>
 
-    <h2>List of the books</h2>
-    <ul>
+    <h2><i class="fas fa-list-ul"> List of the books</i></h2>
+    <ul  class="a">
         <% data.forEach(function(row){ %>
             <a href="/books/details/<%= row.title %>"><li><%= row.title %> </a></li>
        <% }) %>
-       </ul> 
-     
-    <h2>Delete books</h2>  
+    </ul>  
+
+    <h2><i class="fas fa-trash-alt"> Delete books</i></h2>  
        <form action="/books/delete">
         <div class="form-group">
-                <input type="number" name="id" required >
+                <input type="number" name="id" placeholder="Enter book id"required >
         </div>
-        <input type="submit" value="Delete" >
+        <input class="button" type="submit" value="Delete" >
     </form>
+</ul>
 <% include partials/footer %>

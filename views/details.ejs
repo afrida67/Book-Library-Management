@@ -1,12 +1,13 @@
 <% include partials/header %>
 
-    <h2>Book details</h2>
+    <h3> Book details</h3>
 
 
     <ul>
-        <li><font color="red">Title: </font> <%= data.title %></li> 
-        <li><font color="red">Author: </font><%= data.author %>  </li>
-        <li><font color="red">Description: </font><%= data.description %></li>
+        <li class="a"><font color="red">Title : </font> <%= data.title %></li> 
+        <li class="a"><font color="red">Author : </font><%= data.author %>  </li>
+        <li class="a"><font color="red">Description : </font></li>
+            <span> <%= data.description %></span>
         <li>
             <img class="book-img" src=/uploads/<%= data.photo_path %> 
         </li>

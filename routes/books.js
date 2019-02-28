@@ -104,7 +104,6 @@ router.get('/details/:title', function (req, res, next){
     const title = req.params.title;
 
     pool.query(`Select * from book where title= '${title}'`, (err, result) => {
-
         res.render('details', {data:result[0]});
     });
 });

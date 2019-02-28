@@ -1,0 +1,46 @@
+body {
+    background-color: #FFFFE0;
+  }
+.mid{
+    position: relative;
+    left: 40px;
+    font-weight: bolder;
+    text-decoration-line: overline underline;
+    text-decoration-style: wavy;
+}
+li.a {
+    font-weight: bold;
+    font-size: 19px;
+}
+p.a {
+    color: black;
+}
+.button {
+    display: inline-block;
+    border-radius: 4px;
+    background-color: #f4511e;
+    border: none;
+    color: #EBE3E3;
+    text-align: center;
+    font-size: 24px;
+    transition: all 0.5s;
+    cursor: pointer;
+    margin: 5px;
+  }
+  
+  ul.a {
+    list-style-type: circle;
+    font-size: 19px;
+    font-weight: bold;
+  }
+
+  .book-img {
+    height: 15%;
+    width: 15%;
+  }
+  span { 
+    display:block;
+    width:350px;
+    word-wrap:break-word;
+    font-weight: bold;
+}
