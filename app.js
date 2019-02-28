@@ -2,7 +2,6 @@ const express = require('express');
 const path = require('path');
 const app = express();
 
-
 const port = process.env.PORT || 3000;
 
 const logger = function (req, res, next){
@@ -10,7 +9,7 @@ const logger = function (req, res, next){
     next();
 }
 
-//app.use(logger);
+app.use(logger);
 
 // Handlebars Middleware
 app.set('view engine', 'ejs');
@@ -28,7 +27,6 @@ app.get('/', function (req, res){
     res.render('index');
 
 });
-
 
 // api Routes
 app.use('/books', require('./routes/books'));

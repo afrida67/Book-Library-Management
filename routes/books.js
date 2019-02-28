@@ -1,26 +1,65 @@
 const pool = require('../database/config');
 const express = require('express');
 const router = express.Router();
+const multer = require('multer');
+const path = require('path');
+
+const storage = multer.diskStorage({
+    destination: './public/uploads/',
+    filename: function(req, file, cb){
+      cb(null, file.fieldname + '-' + Date.now() + path.extname(file.originalname));
+    }
+  });
+
+const upload = multer({
+    storage: storage,
+    limits:{fileSize: 1000000},
+    fileFilter: function(req, file, cb){
+      checkFileType(file, cb);
+    }
+  }).single('image');
+
+// Check File Type
+function checkFileType(file, cb){
+  // Allowed ext
+  const filetypes = /jpeg|jpg|png|gif/;
+  // Check ext
+  const extname = filetypes.test(path.extname(file.originalname).toLowerCase());
+  // Check mime
+  const mimetype = filetypes.test(file.mimetype);
+
+  if(mimetype && extname){
+    return cb(null,true);
+  } else {
+    cb('Error: Images Only!');
+  }
+}
 
 // showing all the books
 router.get('/', function (req, res){
 
     pool.query(`SELECT * FROM book`, (err, result) => {
-
-        res.render('index', {data:result});
+     res.render('index', {data:result});
     });
  
 });
 
 // add a new book
-router.post('/', function (req, res) {
+router.post('/', upload, function (req, res) {
 
-    pool.query(`INSERT INTO book SET ?`, req.body, (err, result) => {
+    const values = {
+        title: req.body.title,
+        author: req.body.author,
+        description: req.body.description,
+        photo_path: req.file ? req.file.filename : 'default.png'
+      };
 
-        res.status(201).json({ msg: `Book added with ID ${result.insertId}`});
-        console.log(result);
-
-    });
+      pool.query(`INSERT INTO book SET ?`, [values], (err, result) => {
+  
+          res.status(201).json({ msg: `Book added with ID ${result.insertId}`});
+          console.log(result);
+  
+      });
 
 });
 

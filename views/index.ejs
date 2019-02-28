@@ -1,7 +1,7 @@
 <% include partials/header %>
     <h2>Add books</h2>
 
-    <form method="POST" action="/books">
+    <form method="POST" action="/books" enctype="multipart/form-data">
         <div class="form-group">
           <label for="name">Title</label>
           <input type="text" name="title" required >
@@ -11,6 +11,9 @@
           <br>
           <label for="name">Description</label>
           <input type="text" name="description" required >
+          <br>
+          <label for="name">Book Image</label>
+          <input name="image" type="file" required >
         </div>
         <input type="submit" value="Add book" >
     </form>
