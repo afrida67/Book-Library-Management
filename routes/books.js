@@ -60,11 +60,13 @@ router.get('/delete', function (req, res, next){
 
 //details of the books
 
-router.get('/details', function (req, res, next){
+router.get('/details/:title', function (req, res, next){
 
-    pool.query(`Select * from book`, (err, result) => {
+    const title = req.params.title;
 
-        res.render('details', {data:result});
+    pool.query(`Select * from book where title= '${title}'`, (err, result) => {
+
+        res.render('details', {data:result[0]});
     });
 });
 
