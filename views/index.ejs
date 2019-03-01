@@ -1,6 +1,6 @@
 <% include partials/header %>
 <ul>
-    <h2> <i class="fas fa-plus-circle"> Add books</i></h2>
+    <h3> <i class="fas fa-plus-circle"> Add books</i></h3>
 
     <form method="POST" action="/books" enctype="multipart/form-data">
         <div class="form-group">
@@ -28,19 +28,31 @@
     </div>
     </form>
 
-    <h2><i class="fas fa-list-ul"> List of the books</i></h2>
+    <h3><i class="fas fa-list-ul"> List of the Books</i></h3>
     <ul  class="a">
         <% data.forEach(function(row){ %>
             <a href="/books/details/<%= row.title %>"><li><%= row.title %> </a></li>
        <% }) %>
     </ul>  
 
-    <h2><i class="fas fa-trash-alt"> Delete books</i></h2>  
+    <h3><i class="fas fa-trash-alt"> Delete Books</i></h3>  
        <form action="/books/delete">
         <div class="form-group">
-                <input type="number" name="id" placeholder="Enter book id"required >
+                <input type="number" name="id" placeholder="Enter book id" required >
         </div>
         <input class="button" type="submit" value="Delete" >
     </form>
+
+
+    <h3><i class="fas fa-edit">Update Books</i></h3>  
+       <form action="/books/update">
+        <div class="form-group">
+                Id<input type="number" name="id" placeholder="Enter book id" required >
+                <br>
+                Title<input type="text" name="title" placeholder="Edit Title"/><br/>
+       </div>
+        <input class="button" type="submit" value="Edit" >
+    </form>
+
 </ul>
 <% include partials/footer %>

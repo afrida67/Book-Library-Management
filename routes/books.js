@@ -134,4 +134,25 @@ router.get('/details/:title', function (req, res, next){
     });
 });
 
+//editing the book list 
+
+router.get('/update', function (req, res, next){
+
+  const id = req.query.id;
+  const title = req.query.title;
+
+  pool.query(`UPDATE book SET title= '${title}' WHERE id= ${id}`,  (err, result) => {
+    if (err){
+      let err = new Error('Not Connected');
+      next(err);
+  } else {
+      if (result.affectedRows == 0) {
+          console.log('ID not found');
+          return next(createError(404, 'Id does not exist!'));
+      }
+      res.status(201).json({ msg: `Book list updated`});
+     }
+  });
+});
+
 module.exports = router;
