@@ -2,7 +2,7 @@
 <ul>
     <h3> <i class="fas fa-plus-circle"> Add books</i></h3>
 
-    <form method="POST" action="/books" enctype="multipart/form-data">
+    <form method="POST" action="/books">
         <div class="form-group">
           <label for="name">Title</label>
           <input type="text" name="title" required >
@@ -13,46 +13,12 @@
           <label for="name">Description</label>
           <textarea input type="text" name="description" cols="30" rows="5"></textarea>
           <br>
-          <label for="name">Book Image</label>
-          <input name="image" type="file" required >
-          <br>
           <input class="button" type="submit" value="Add book" >
         </div>
 
     </form>
 
-       <form action="/books/find">
-        <div class="form-group">
-        <input type="number" name="id" placeholder="Enter book id" required>
-        <input class="button" type="submit" value="Find the book" >
-    </div>
-    </form>
 
-    <h3><i class="fas fa-list-ul"> List of the Books</i></h3>
-    <ul  class="a">
-        <% data.forEach(function(row){ %>
-            <a href="/books/details/<%= row.title %>"><li><%= row.title %> </a></li>
-       <% }) %>
-    </ul>  
-
-    <h3><i class="fas fa-trash-alt"> Delete Books</i></h3>  
-       <form action="/books/delete">
-        <div class="form-group">
-                <input type="number" name="id" placeholder="Enter book id" required >
-        </div>
-        <input class="button" type="submit" value="Delete" >
-    </form>
-
-
-    <h3><i class="fas fa-edit">Update Books</i></h3>  
-       <form action="/books/update">
-        <div class="form-group">
-                Id<input type="number" name="id" placeholder="Enter book id" required >
-                <br>
-                Title<input type="text" name="title" placeholder="Edit Title"/><br/>
-       </div>
-        <input class="button" type="submit" value="Edit" >
-    </form>
 
 </ul>
 <% include partials/footer %>

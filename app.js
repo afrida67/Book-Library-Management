@@ -1,3 +1,5 @@
+require('./database/db');
+
 const express = require('express');
 const path = require('path');
 const app = express();
@@ -7,7 +9,7 @@ const port = process.env.PORT || 3000;
 const logger = function (req, res, next){
     console.log('Logging....');
     next();
-}
+};
 
 app.use(logger);
 
