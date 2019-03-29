@@ -13,7 +13,14 @@ router.post('/', (req, res) => {
 });
 
 router.get('/list', (req, res) => {
-  res.json('Book list'); 
+
+  Book.find({}, function (err, result){
+    if(err) {
+      console.log(err);
+    } else {
+      res.render('list', {data: result});
+    }
+  })
 });
 
 
@@ -28,7 +35,7 @@ function addBook(req, res){
 
   book.save((err, doc) => {
       if (!err)
-          res.redirect('list');
+          res.redirect('books/list');
       else {
           console.log('error', err);
       }
