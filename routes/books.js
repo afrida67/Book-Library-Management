@@ -1,7 +1,8 @@
 const express = require('express');
 const router = express.Router();
 const mongoose = require('mongoose');
-const Book = mongoose.model('Book');
+//const Book = mongoose.model('Book');
+const Book = require('../database/book_schema');
 
 router.get('/', (req, res) => {
   res.render('index');

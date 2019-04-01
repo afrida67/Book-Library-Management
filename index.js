@@ -1,10 +1,20 @@
-require('./database/db');
-
 const express = require('express');
 const path = require('path');
+const mongoose = require('mongoose');
+
 const app = express();
 
 const port = process.env.PORT || 3000;
+
+
+// Connect to MongoDB
+mongoose
+  .connect(
+    'mongodb://mongod:27017/library',
+    { useNewUrlParser: true }
+  )
+  .then(() => console.log('MongoDB Connected'))
+  .catch(err => console.log(err));
 
 const logger = function (req, res, next){
     console.log('Logging....');

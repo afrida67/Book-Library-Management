@@ -1,6 +1,7 @@
 const mongoose = require('mongoose');
+const Schema = mongoose.Schema;
 
-let bookSchema = new mongoose.Schema({
+const bookSchema = new Schema({
     title: {
         type: String
     },
@@ -12,4 +13,5 @@ let bookSchema = new mongoose.Schema({
     }
 });
 
-mongoose.model('Book', bookSchema);
+
+module.exports = mongoose.model('Book', bookSchema);
