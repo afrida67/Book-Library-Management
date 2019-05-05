@@ -1,31 +1,21 @@
 const express = require('express');
 const router = express.Router();
-const mongoose = require('mongoose');
-//const Book = mongoose.model('Book');
-const Book = require('../database/book_schema');
+
+const Book = require('../model/book_schema');
 
 router.get('/', (req, res) => {
-  res.render('index');
-});
 
-router.post('/', (req, res) => {
-    addBook(req, res);
-    console.log(req.body); 
-});
-
-router.get('/list', (req, res) => {
-
-  Book.find({}, function (err, result){
+  Book.find({}, (err, result) => {
     if(err) {
       console.log(err);
     } else {
-      res.render('list', {data: result});
+      res.render('index', {data: result});
     }
-  })
+  });
+  
 });
 
-
-function addBook(req, res){
+router.post('/', (req, res) => {
 
   const book = new Book();
 
@@ -33,14 +23,25 @@ function addBook(req, res){
   book.author = req.body.author;
   book.description = req.body.description;
 
-
-  book.save((err, doc) => {
+  book.save( (err, result) => {
       if (!err)
-          res.redirect('books/list');
+          res.redirect('books');
       else {
           console.log('error', err);
       }
+  }); 
+});
+
+router.get('/details/:id', (req, res) => {
+
+  Book.findById({ _id: req.params.id }, (err, result) => {
+    if(err) {
+      console.log(err);
+    } else {
+      res.render('details', {data: result});
+    }
   });
-}
+});
+
 
 module.exports = router;

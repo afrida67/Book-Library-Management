@@ -6,15 +6,13 @@ const app = express();
 
 const port = process.env.PORT || 3000;
 
-
 // Connect to MongoDB
-mongoose
-  .connect(
-    'mongodb://mongod:27017/library',
-    { useNewUrlParser: true }
-  )
-  .then(() => console.log('MongoDB Connected'))
-  .catch(err => console.log(err));
+// change localhost to mongo while using dockerfile
+
+mongoose.connect('mongodb://localhost:27017/library', { useNewUrlParser: true }, (err) => {
+    if (!err) { console.log('MongoDB Connection Succeeded...') }
+    else { console.log(`Error in DB connection : ${err}`)}
+});
 
 const logger = function (req, res, next){
     console.log('Logging....');
@@ -39,7 +37,7 @@ app.use('/books', require('./routes/books'));
 
 //error middleware
 app.use(function(req, res){
-    res.status(404).send('Not found Error');
+    res.status(404).send('Damn, Not found Error');
   });
 
 app.listen(port, () => console.log(`Server started on port ${port}`));
