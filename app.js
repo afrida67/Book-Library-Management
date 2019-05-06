@@ -15,7 +15,7 @@ mongoose.connect('mongodb://localhost:27017/library', { useNewUrlParser: true },
 });
 
 const logger = function (req, res, next){
-    console.log('Logging....');
+  //  console.log('Logging....');
     next();
 };
 

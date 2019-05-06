@@ -2,8 +2,8 @@
 <ul>
     <h3> <i class="fas fa-plus-circle"> Add books</i></h3>
 
-    <form method="POST" action="/books">
-        <div class="form-group">
+    <form method="POST" action="/books" enctype="multipart/form-data">
+        <div class= "form-group" >
           <label for="name">Title</label>
           <input type="text" name="title" required >
           <br>
@@ -12,6 +12,9 @@
           <br>
           <label for="name">Description</label>
           <textarea input type="text" name="description" cols="30" rows="5"></textarea>
+          <br>
+          <label for="name">Book Image</label>
+          <input name="image" type="file" required >
           <br>
           <input class="button" type="submit" value="Add book" >
         </div>

@@ -2,9 +2,9 @@
   "name": "library",
   "version": "1.0.0",
   "description": "book library crud operation",
-  "main": "index.js",
+  "main": "app.js",
   "scripts": {
-    "start": "node index.js"
+    "start": "node app.s"
   },
   "keywords": [],
   "author": "Afrida",

@@ -10,6 +10,9 @@ const bookSchema = new Schema({
     },
     description: {
         type: String
+    },
+    photo_path: {
+        type: String
     }
 });
 
