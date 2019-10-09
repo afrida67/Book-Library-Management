@@ -4,7 +4,7 @@
   "description": "book library crud operation",
   "main": "app.js",
   "scripts": {
-    "start": "node app.s"
+    "start": "nodemon app.js"
   },
   "keywords": [],
   "author": "Afrida",

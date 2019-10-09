@@ -5,6 +5,8 @@ const path = require('path');
 
 const Book = require('../model/book_schema');
 
+const User = require('../model/user_schema');
+
 const storage = multer.diskStorage({
   destination: './public/uploads/',
   filename: function(req, file, cb){
@@ -21,7 +23,7 @@ const upload = multer({
 }).single('image');
 
 // Check File Type
-function checkFileType(file, cb){
+function checkFileType(file, cb) {
 
   const filetypes = /jpeg|jpg|png|gif/;
   const extname = filetypes.test(path.extname(file.originalname).toLowerCase());
@@ -40,7 +42,7 @@ router.get('/', (req, res) => {
     if(err) {
       console.log(err);
     } else {
-      res.render('index', {data: result});
+      res.render('index', { data: result });
     }
   });
   
