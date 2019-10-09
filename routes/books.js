@@ -4,7 +4,6 @@ const multer = require('multer');
 const path = require('path');
 
 const Book = require('../model/book_schema');
-
 const User = require('../model/user_schema');
 
 const storage = multer.diskStorage({
@@ -52,20 +51,27 @@ router.post('/', upload, (req, res) => {
 
   const book = new Book();
   
-  book.user_id = '5d9dbf359f64272c260ddd2d',
+  book.user_id = '5d9e3ba694f11227e1f54cc3',
   book.title = req.body.title;
   book.author = req.body.author;
   book.description = req.body.description;
   book.photo_path = req.file ? req.file.filename : 'default.png';
 
   book.save( (err, result) => {
-    console.log(result);
       if (!err)
           res.redirect('books');
       else {
           console.log('error', err);
       }
   }); 
+  User.findOneAndUpdate('5d9e3ba694f11227e1f54cc3', {$push: { books: [book] }}, (err, result) => {
+      if(err) {
+          console.log(err);
+      } else {
+          console.log('booked saved');
+      }
+  });
+
 });
 
 router.get('/details/:id', (req, res) => {
