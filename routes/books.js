@@ -51,13 +51,15 @@ router.get('/', (req, res) => {
 router.post('/', upload, (req, res) => {
 
   const book = new Book();
-
+  
+  book.user_id = '5d9dbf359f64272c260ddd2d',
   book.title = req.body.title;
   book.author = req.body.author;
   book.description = req.body.description;
   book.photo_path = req.file ? req.file.filename : 'default.png';
 
   book.save( (err, result) => {
+    console.log(result);
       if (!err)
           res.redirect('books');
       else {
