@@ -34,7 +34,6 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 // api Routes
 app.use('/books', require('./routes/books'));
-app.use('/users', require('./routes/users'));
 //error middleware
 app.use(function(req, res){
     res.status(404).send('Damn, Not found Error');

@@ -37,38 +37,53 @@ function checkFileType(file, cb) {
 
 router.get('/', (req, res) => {
 
-  Book.find({}, (err, result) => {
+  Book.find({}, (err, result1) => {
     if(err) {
       console.log(err);
     } else {
-      res.render('index', { data: result });
+      User.find({}, (err, result2) => {
+        if(err) {
+          console.log(err);
+        } else {
+          res.render('index', {
+            data: result1,
+            user: result2
+            });  
+        }
+      });
     }
+
   });
-  
+
 });
+
 
 router.post('/', upload, (req, res) => {
 
   const book = new Book();
   
-  book.user_id = '5d9e3ba694f11227e1f54cc3',
+  //book.user_id = '5d9dbf439f64272c260ddd2e',
+  book.user_id = req.body.user_id,
   book.title = req.body.title;
   book.author = req.body.author;
   book.description = req.body.description;
   book.photo_path = req.file ? req.file.filename : 'default.png';
 
   book.save( (err, result) => {
-      if (!err)
-          res.redirect('books');
+      if (!err){
+        res.redirect('books');
+      }
       else {
-          console.log('error', err);
+          console.log(err);
       }
   }); 
-  User.findOneAndUpdate('5d9e3ba694f11227e1f54cc3', {$push: { books: [book] }}, (err, result) => {
+  User.findOneAndUpdate({ _id: book.user_id}, { $push: { books: book }}, { useFindAndModify: false }, (err, result) => {
       if(err) {
           console.log(err);
       } else {
-          console.log('booked saved');
+        console.log(book)
+        console.log(result)
+          console.log('book data inserted into user model');
       }
   });
 

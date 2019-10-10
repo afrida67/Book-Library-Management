@@ -5,6 +5,21 @@
     <form method="POST" action="/books" enctype="multipart/form-data">
 
         <div class= "form-group" >
+
+                <h4 >Select an user : 
+                        <select id="userlist" onchange="document.getElementById('user').innerHTML='Username: '+this.value">
+                                <% user.forEach(function(row){ %>
+                                     <option value="<%= row.name %>"><%= row.name %></option>
+                                 <% }) %>
+                        </select>
+                </h4>
+        </div>
+                       
+            <div>
+                <h4 id="user">Username: </h4>
+            </div>
+
+          <br>
           <label for="name">Title</label>
           <input type="text" name="title" required >
           <br>
