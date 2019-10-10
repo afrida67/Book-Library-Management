@@ -5,12 +5,8 @@ const userSchema = new Schema({
     name: String,
     books: [
         { 
-            _id: Schema.Types.ObjectId,
-            user_id: Schema.Types.ObjectId,
-            title: String,
-            description: String,
-            author: String,
-            photo_path: String
+            type: Schema.Types.ObjectId,
+            ref: 'Book'
         }
     ]
 });

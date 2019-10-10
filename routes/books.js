@@ -57,40 +57,29 @@ router.get('/', (req, res) => {
 
 });
 
+router.post("/", upload, async (req, res) => {
+  try {
+      const book = await Book.create({
+          user_id: '5d9f72e36950211fdd3811d4',
+          title : req.body.title,
+          author: req.body.author,
+          description: req.body.description,
+          photo_path : req.file ? req.file.filename : 'default.png'
+      });
 
-router.post('/', upload, (req, res) => {
+      const user = await User.findByIdAndUpdate({_id: '5d9f72e36950211fdd3811d4' }, 
+      { $push: { books: book._id }},{ new: true }).populate('books');
 
-  const book = new Book();
-  
-  book.user_id = '5d9f15766cc6e713d156b11c',
- // book.user_id = req.body.user_id,
+     // console.log("user saved", user.books);
+       return res.redirect('books');
 
-  //console.log('id '+req.body.user_id)
+  } catch (err) {
+      console.log(err);
 
-  book.title = req.body.title;
-  book.author = req.body.author;
-  book.description = req.body.description;
-  book.photo_path = req.file ? req.file.filename : 'default.png';
-
-
-  book.save(async (err, result) => {
-    if (!err){
-      console.log(book)
-      res.redirect('books');
-    }
-    else {
-        console.log(err);
-    }
-}); 
-
-  User.findOneAndUpdate({_id:'5d9f15766cc6e713d156b11c'}, { $push: { books: [book] }}, { useFindAndModify: false }, (err, result) => {
-    if(err) {
-        console.log(err);
-    } else {
-        console.log('book data is saved');
-    }
-  });
+      return res.status(400).end();
+  }
 });
+
 
 router.get('/details/:id', (req, res) => {
 
@@ -98,10 +87,9 @@ router.get('/details/:id', (req, res) => {
     if(err) {
       console.log(err);
     } else {
-      res.render('details', {data: result});
+      res.render('details', { data: result });
     }
   });
 });
-
 
 module.exports = router;
