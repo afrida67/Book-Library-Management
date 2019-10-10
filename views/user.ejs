@@ -1,0 +1,15 @@
+<h1>i'm  <%= username %>  info</h1>
+
+
+<h3>User Book List</h3>
+
+<% data.forEach(function(row){ %>
+   <ul>
+       <li class="a">Title :  <%= row.title %> </li>
+       <li class="a">Author <%= row.author %> </li>
+       <li class="a">Description <%= row.description %> </li>
+       <li>
+        <img class="book-img" src=/uploads/<%= row.photo_path %> 
+    </li>
+    </ul>
+<% }) %>

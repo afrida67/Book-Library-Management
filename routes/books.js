@@ -92,4 +92,15 @@ router.get('/details/:id', (req, res) => {
   });
 });
 
+router.get('/users', async (req, res) => {
+
+  const info = await User.findById({ _id: '5d9f72e36950211fdd3811d4' }).populate('books');
+  //console.log(info.books)
+  res.render('user', { 
+    data: info.books,
+    username: info.name
+  });
+  //return res.redirect('books');
+});
+
 module.exports = router;
