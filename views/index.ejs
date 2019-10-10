@@ -9,15 +9,15 @@
                 <h4 >Select an user : 
                         <select id="userlist" onchange="document.getElementById('user').innerHTML='Username: '+this.value">
                                 <% user.forEach(function(row){ %>
-                                     <option value="<%= row.name %>"><%= row.name %></option>
+                                     <option value="<%= row._id %>"><%= row.name %></option>
                                  <% }) %>
                         </select>
                 </h4>
         </div>
                        
-            <div>
-                <h4 id="user">Username: </h4>
-            </div>
+        <div>
+                <h4 id="user" >Username: </h4>
+        </div>
 
           <br>
           <label for="name">Title</label>
@@ -26,6 +26,7 @@
           <label for="name">Author</label>
           <input type="text" name="author" required >
           <br>
+    
           <label for="name">Description</label>
           <textarea input type="text" name="description" cols="30" rows="5"></textarea>
           <br>
