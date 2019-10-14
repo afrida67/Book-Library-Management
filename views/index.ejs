@@ -3,22 +3,15 @@
     <h3> <i class="fas fa-plus-circle"> Add books</i></h3>
 
     <form method="POST" action="/books" enctype="multipart/form-data">
+        <h4 >Select an user : 
+            <select class="selectpicker" data-style="btn-info" name="user_id">
 
-        <div class= "form-group" >
+                        <% user.forEach(function(row){ %>
+                            <option value="<%= row._id %>"><%= row.name %></option>
+                        <% }) %>
 
-                <h4 >Select an user : 
-                        <select id="userlist" onchange="document.getElementById('user').innerHTML='Username: '+this.value">
-                                <% user.forEach(function(row){ %>
-                                     <option value="<%= row._id %>"><%= row.name %></option>
-                                 <% }) %>
-                        </select>
-                </h4>
-        </div>
-                       
-        <div>
-                <h4 id="user" >Username: </h4>
-        </div>
-
+            </select>     
+       </h4>
           <br>
           <label for="name">Title</label>
           <input type="text" name="title" required >
@@ -37,7 +30,7 @@
         </div>
 
     </form>
-
+    <br>
     <h3>Book List</h3>
 
     <% data.forEach(function(row){ %>
@@ -45,6 +38,17 @@
            <a href="/books/details/<%= row._id%>"><li class="a"> <%= row.title %> </li></a> 
         </ul>
     <% }) %>
+    <br>
+
+    <%#  user with their booklist %> 
+
+    <h3>User List</h3>
+
+    <% user.forEach(function(row){ %>
+        <ul>
+            <a href="/books/users/<%= row._id%>"><li class="a"> <%= row.name %> </li></a> 
+         </ul>
+     <% }) %>
 
 </ul>
 <% include partials/footer %>
