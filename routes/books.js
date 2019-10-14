@@ -34,13 +34,12 @@ function checkFileType(file, cb) {
     cb('Error: Images Only!');
   }
 }
+//routes 
 
 router.get('/', async (req, res) => {
   try {
-    const books = await Book.find({});
     const users = await User.find({});
     res.render('index', {
-      data: books,
       user: users
       }); 
   } catch(err){
@@ -85,10 +84,12 @@ router.get('/details/:id', async (req, res) => {
 router.get('/users/:id', async (req, res) => {
   try {
     const info = await User.findById({ _id: req.params.id }).populate('books');
-    //console.log(info.books)
+    //console.log(info.books.length)
+   // console.log(info)
     res.render('user', { 
       data: info.books,
-      username: info.name
+      username: info.name,
+      totalBook: info.books.length
     });
   } catch(err){
         console.log(err);

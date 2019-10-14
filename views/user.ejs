@@ -1,15 +1,16 @@
+<% include partials/header %>
 <h1>i'm  <%= username %>'s  book list</h1>
 
 
+
 <h3>User Book List</h3>
+<p> <%= username %> has <%= totalBook %> <%= totalBook > 1 ?  'Books' : ' Book' %> </p>
 
 <% data.forEach(function(row){ %>
    <ul>
-       <li class="a">Title :  <%= row.title %> </li>
-       <li class="a">Author <%= row.author %> </li>
-       <li class="a">Description <%= row.description %> </li>
-       <li>
-        <img class="book-img" src=/uploads/<%= row.photo_path %> 
+    <a href="/books/details/<%= row._id%>"><li class="a">  <%= row.title %> </li></a> 
     </li>
     </ul>
 <% }) %>
+
+<% include partials/footer %>

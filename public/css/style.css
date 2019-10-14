@@ -5,9 +5,8 @@ body {
     position: relative;
     left: 40px;
     font-weight: bolder;
-    text-decoration-line: overline underline;
-    text-decoration-style: wavy;
 }
+
 li.a {
     font-weight: bold;
     font-size: 19px;
