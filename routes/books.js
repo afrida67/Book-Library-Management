@@ -35,29 +35,22 @@ function checkFileType(file, cb) {
   }
 }
 
-router.get('/', (req, res) => {
-
-  Book.find({}, (err, result1) => {
-    if(err) {
-      console.log(err);
-    } else {
-      User.find({}, (err, result2) => {
-        if(err) {
-          console.log(err);
-        } else {
-          res.render('index', {
-            data: result1,
-            user: result2
-            });  
-        }
-      });
-    }
-
-  });
+router.get('/', async (req, res) => {
+  try {
+    const books = await Book.find({});
+    const users = await User.find({});
+    res.render('index', {
+      data: books,
+      user: users
+      }); 
+  } catch(err){
+    console.log(err);
+    return res.status(400).end();
+  }
 
 });
 
-router.post("/", upload, async (req, res) => {
+router.post('/', upload, async (req, res) => {
   try {
       const book = await Book.create({
           user_id: req.body.user_id,
@@ -66,7 +59,6 @@ router.post("/", upload, async (req, res) => {
           description: req.body.description,
           photo_path : req.file ? req.file.filename : 'default.png'
       });
-    //  console.log(book.user_id)
      await User.findByIdAndUpdate({_id: book.user_id }, 
       { $push: { books: book._id }},{ new: true }).populate('books');
      // console.log("user saved", user.books);
@@ -74,24 +66,22 @@ router.post("/", upload, async (req, res) => {
 
   } catch (err) {
       console.log(err);
-
       return res.status(400).end();
   }
 });
 
-router.get('/details/:id', (req, res) => {
-
-  Book.findById({ _id: req.params.id }, (err, result) => {
-    if(err) {
+//book details
+router.get('/details/:id', async (req, res) => {
+  try {
+    const result = await Book.findById({ _id: req.params.id })
+    res.render('details', { data: result });
+  } catch(err){
       console.log(err);
-    } else {
-      res.render('details', { data: result });
-    }
-  });
+      return res.status(400).end();
+  }
 });
 
 //getting user with their all booklist
-
 router.get('/users/:id', async (req, res) => {
   try {
     const info = await User.findById({ _id: req.params.id }).populate('books');
@@ -100,11 +90,10 @@ router.get('/users/:id', async (req, res) => {
       data: info.books,
       username: info.name
     });
-    //return res.redirect('books');
   } catch(err){
         console.log(err);
+        return res.status(400).end();
   }
-
 });
 
 module.exports = router;
