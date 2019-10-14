@@ -91,6 +91,7 @@ router.get('/users/:id', async (req, res) => {
       path: 'books',
       options: {
         limit: perPage,
+        sort: { title: 1},
         skip: (currentPage - 1) * perPage
       }
     })
