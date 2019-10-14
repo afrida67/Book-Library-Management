@@ -83,13 +83,22 @@ router.get('/details/:id', async (req, res) => {
 //getting user with their all booklist
 router.get('/users/:id', async (req, res) => {
   try {
-    const info = await User.findById({ _id: req.params.id }).populate('books');
-    //console.log(info.books.length)
-   // console.log(info)
+    const currentPage = 1;
+    const perPage = 3;
+
+    const allbooks= await User.findById({ _id: req.params.id }).populate('books');
+    const info = await User.findById({ _id: req.params.id }).populate({
+      path: 'books',
+      options: {
+        limit: perPage,
+        skip: (currentPage - 1) * perPage
+      }
+    })
+//console.log(info)
     res.render('user', { 
       data: info.books,
       username: info.name,
-      totalBook: info.books.length
+      totalBook: allbooks.books.length,
     });
   } catch(err){
         console.log(err);
