@@ -7,8 +7,8 @@
 <p> <%= username %> has <%= totalBook %> <%= totalBook > 1 ?  'Books' : ' Book' %> </p>
 
 <% data.forEach(function(row){ %>
-   <ul>
-    <a href="/books/details/<%= row._id%>"><li class="a">  <%= row.title %> </li></a> 
+   <ul class="user">
+    <a href="/books/details/<%= row._id%>"><li class="user">  <%= row.title %> </li></a> 
     </li>
     </ul>
 <% }) %>
