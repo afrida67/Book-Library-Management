@@ -83,8 +83,8 @@ router.get('/details/:id', async (req, res) => {
 //getting user with their all booklist
 router.get('/users/:id', async (req, res) => {
   try {
-    const currentPage = 1;
     const perPage = 3;
+    const currentPage = req.query.page || 1
 
     const allbooks= await User.findById({ _id: req.params.id }).populate('books');
     const info = await User.findById({ _id: req.params.id }).populate({
@@ -95,11 +95,14 @@ router.get('/users/:id', async (req, res) => {
         skip: (currentPage - 1) * perPage
       }
     })
+    const lastPage = Math.ceil(allbooks.books.length / perPage);
 //console.log(info)
     res.render('user', { 
       data: info.books,
       username: info.name,
       totalBook: allbooks.books.length,
+      pageCount: lastPage,
+      currentPage: currentPage 
     });
   } catch(err){
         console.log(err);
