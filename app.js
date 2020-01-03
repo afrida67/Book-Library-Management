@@ -14,11 +14,10 @@ mongoose.connect('mongodb://localhost:27017/library', { useNewUrlParser: true },
     else { console.log(`Error in DB connection : ${err}`)}
 });
 
-const logger = function (req, res, next){
+const logger = (req, res, next) => {
   //  console.log('Logging....');
     next();
 };
-
 app.use(logger);
 
 // Handlebars Middleware
@@ -34,9 +33,11 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 // api Routes
 app.use('/books', require('./routes/books'));
+
 //error middleware
-app.use(function(req, res){
+app.use((req, res) => {
     res.status(404).send('Damn, Not found Error');
   });
-
+  
+//app port
 app.listen(port, () => console.log(`Server started on port ${port}`));

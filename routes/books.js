@@ -8,7 +8,7 @@ const User = require('../model/user_schema');
 
 const storage = multer.diskStorage({
   destination: './public/uploads/',
-  filename: function(req, file, cb){
+  filename: (req, file, cb) => {
     cb(null, file.fieldname + '-' + Date.now() + path.extname(file.originalname));
   }
 });
@@ -16,14 +16,12 @@ const storage = multer.diskStorage({
 const upload = multer({
   storage: storage,
   limits:{fileSize: 1000000},
-  fileFilter: function(req, file, cb){
+  fileFilter: (req, file, cb) => {
     checkFileType(file, cb);
   }
 }).single('image');
 
-// Check File Type
-function checkFileType(file, cb) {
-
+checkFileType = (file, cb) => {
   const filetypes = /jpeg|jpg|png|gif/;
   const extname = filetypes.test(path.extname(file.originalname).toLowerCase());
   const mimetype = filetypes.test(file.mimetype);
@@ -35,7 +33,6 @@ function checkFileType(file, cb) {
   }
 }
 //routes 
-
 router.get('/', async (req, res) => {
   try {
     const users = await User.find({});
@@ -48,7 +45,7 @@ router.get('/', async (req, res) => {
   }
 
 });
-
+//post book
 router.post('/', upload, async (req, res) => {
   try {
       const book = await Book.create({
@@ -68,7 +65,6 @@ router.post('/', upload, async (req, res) => {
       return res.status(400).end();
   }
 });
-
 //book details
 router.get('/details/:id', async (req, res) => {
   try {
@@ -79,7 +75,6 @@ router.get('/details/:id', async (req, res) => {
       return res.status(400).end();
   }
 });
-
 //getting user with their all booklist
 router.get('/users/:id', async (req, res) => {
   try {
@@ -109,5 +104,4 @@ router.get('/users/:id', async (req, res) => {
         return res.status(400).end();
   }
 });
-
 module.exports = router;
